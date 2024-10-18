@@ -1,4 +1,0 @@
-BasedOnStyle: LLVM
-AlignAfterOpenBracket: BlockIndent
-RemoveSemicolon: true
-IndentWidth: 4
