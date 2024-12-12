@@ -1,5 +1,5 @@
-#ifndef UI_H
-#define UI_H
+#ifndef WINDOW_H
+#define WINDOW_H
 
 #include "../square.h"
 
@@ -9,17 +9,18 @@
 class QLabel;
 
 struct Piece;
+class MoveRecord;
 
-class UI final : public QDialog {
+class MainWindow final : public QDialog {
   public:
-    explicit UI(QWidget *parent = nullptr);
+    explicit MainWindow(QWidget *parent = nullptr);
 
   private:
     QLabel *player = nullptr;
+    MoveRecord *record = nullptr;
 
     Piece *selectedPiece = nullptr;
-    Rank currentRank = 0;
-    File currentFile = 0;
+    Square currentSquare;
 
     std::map<Square, QPushButton *> buttons;
 
@@ -30,9 +31,13 @@ class UI final : public QDialog {
 
     void selectPiece(Square const &square);
 
+    void prepareMove(Square square);
+
+    void makeMove(Square square);
+
     void newGame();
 
     void closeEvent(QCloseEvent *event) override;
 };
 
-#endif // UI_H
+#endif // WINDOW_H
