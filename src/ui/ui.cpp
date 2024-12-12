@@ -176,23 +176,23 @@ UI::UI(QWidget *parent) : QDialog(parent) {
     markings->addWidget(new QLabel("7"), 0, 7, Qt::AlignmentFlag::AlignCenter);
     markings->addWidget(new QLabel("8"), 0, 8, Qt::AlignmentFlag::AlignCenter);
 
-    markings->addWidget(new QLabel("h"), 1, 0, Qt::AlignmentFlag::AlignCenter);
-    markings->addWidget(new QLabel("g"), 2, 0, Qt::AlignmentFlag::AlignCenter);
-    markings->addWidget(new QLabel("f"), 3, 0, Qt::AlignmentFlag::AlignCenter);
-    markings->addWidget(new QLabel("e"), 4, 0, Qt::AlignmentFlag::AlignCenter);
-    markings->addWidget(new QLabel("d"), 5, 0, Qt::AlignmentFlag::AlignCenter);
-    markings->addWidget(new QLabel("c"), 6, 0, Qt::AlignmentFlag::AlignCenter);
-    markings->addWidget(new QLabel("b"), 7, 0, Qt::AlignmentFlag::AlignCenter);
-    markings->addWidget(new QLabel("a"), 8, 0, Qt::AlignmentFlag::AlignCenter);
+    markings->addWidget(new QLabel("a"), 1, 0, Qt::AlignmentFlag::AlignCenter);
+    markings->addWidget(new QLabel("b"), 2, 0, Qt::AlignmentFlag::AlignCenter);
+    markings->addWidget(new QLabel("c"), 3, 0, Qt::AlignmentFlag::AlignCenter);
+    markings->addWidget(new QLabel("d"), 4, 0, Qt::AlignmentFlag::AlignCenter);
+    markings->addWidget(new QLabel("e"), 5, 0, Qt::AlignmentFlag::AlignCenter);
+    markings->addWidget(new QLabel("f"), 6, 0, Qt::AlignmentFlag::AlignCenter);
+    markings->addWidget(new QLabel("g"), 7, 0, Qt::AlignmentFlag::AlignCenter);
+    markings->addWidget(new QLabel("h"), 8, 0, Qt::AlignmentFlag::AlignCenter);
 
-    markings->addWidget(new QLabel("h"), 1, 9, Qt::AlignmentFlag::AlignCenter);
-    markings->addWidget(new QLabel("g"), 2, 9, Qt::AlignmentFlag::AlignCenter);
-    markings->addWidget(new QLabel("f"), 3, 9, Qt::AlignmentFlag::AlignCenter);
-    markings->addWidget(new QLabel("e"), 4, 9, Qt::AlignmentFlag::AlignCenter);
-    markings->addWidget(new QLabel("d"), 5, 9, Qt::AlignmentFlag::AlignCenter);
-    markings->addWidget(new QLabel("c"), 6, 9, Qt::AlignmentFlag::AlignCenter);
-    markings->addWidget(new QLabel("b"), 7, 9, Qt::AlignmentFlag::AlignCenter);
-    markings->addWidget(new QLabel("a"), 8, 9, Qt::AlignmentFlag::AlignCenter);
+    markings->addWidget(new QLabel("a"), 1, 9, Qt::AlignmentFlag::AlignCenter);
+    markings->addWidget(new QLabel("b"), 2, 9, Qt::AlignmentFlag::AlignCenter);
+    markings->addWidget(new QLabel("c"), 3, 9, Qt::AlignmentFlag::AlignCenter);
+    markings->addWidget(new QLabel("d"), 4, 9, Qt::AlignmentFlag::AlignCenter);
+    markings->addWidget(new QLabel("e"), 5, 9, Qt::AlignmentFlag::AlignCenter);
+    markings->addWidget(new QLabel("f"), 6, 9, Qt::AlignmentFlag::AlignCenter);
+    markings->addWidget(new QLabel("g"), 7, 9, Qt::AlignmentFlag::AlignCenter);
+    markings->addWidget(new QLabel("h"), 8, 9, Qt::AlignmentFlag::AlignCenter);
 
     markings->addWidget(new QLabel("1"), 9, 1, Qt::AlignmentFlag::AlignCenter);
     markings->addWidget(new QLabel("2"), 9, 2, Qt::AlignmentFlag::AlignCenter);
