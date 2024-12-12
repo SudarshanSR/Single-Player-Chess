@@ -10,7 +10,7 @@
 
 struct Piece;
 
-inline std::array<std::array<Square, 8>, 8> constexpr k_board{
+inline static std::array<std::array<Square, 8>, 8> constexpr k_board{
     Square{0, 0}, Square{0, 1}, Square{0, 2}, Square{0, 3}, Square{0, 4},
     Square{0, 5}, Square{0, 6}, Square{0, 7}, Square{1, 0}, Square{1, 1},
     Square{1, 2}, Square{1, 3}, Square{1, 4}, Square{1, 5}, Square{1, 6},

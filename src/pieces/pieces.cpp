@@ -35,9 +35,9 @@ auto Pawn::get_moves(Square const &current_square) -> std::set<Move> {
         moves.emplace(current_square, front_rank->at(file));
 
     if (file != 0) {
-        Piece const *piece = k_pieces[current_rank[file - 1]];
+        Piece const *piece = k_pieces[front_rank->at(file - 1)];
         auto const *pawn =
-            dynamic_cast<Pawn *>(k_pieces[front_rank->at(file - 1)]);
+            dynamic_cast<Pawn *>(k_pieces[current_rank[file - 1]]);
 
         if ((piece && piece->colour != this->colour) ||
             (pawn && pawn->can_be_en_passanted && pawn->colour != this->colour))
@@ -45,9 +45,9 @@ auto Pawn::get_moves(Square const &current_square) -> std::set<Move> {
     }
 
     if (file != 7) {
-        Piece const *piece = k_pieces[current_rank[file + 1]];
+        Piece const *piece = k_pieces[front_rank->at(file + 1)];
         auto const *pawn =
-            dynamic_cast<Pawn *>(k_pieces[front_rank->at(file + 1)]);
+            dynamic_cast<Pawn *>(k_pieces[current_rank[file + 1]]);
 
         if ((piece && piece->colour != this->colour) ||
             (pawn && pawn->can_be_en_passanted && pawn->colour != this->colour))
@@ -65,25 +65,9 @@ auto Knight::get_moves(Square const &current_square) -> std::set<Move> {
 
     auto const &[rank, file] = current_square;
 
-    if (rank >= 2) {
-        if (file >= 1) {
-            Square const &square = k_board[rank - 2][file - 1];
-
-            if (Piece const *piece = k_pieces[square];
-                !piece || piece->colour != this->colour)
-                moves.emplace(current_square, square);
-        }
-
+    if (rank >= 1) {
         if (file >= 2) {
             Square const &square = k_board[rank - 1][file - 2];
-
-            if (Piece const *piece = k_pieces[square];
-                !piece || piece->colour != this->colour)
-                moves.emplace(current_square, square);
-        }
-
-        if (file < 7) {
-            Square const &square = k_board[rank - 2][file + 1];
 
             if (Piece const *piece = k_pieces[square];
                 !piece || piece->colour != this->colour)
@@ -97,27 +81,29 @@ auto Knight::get_moves(Square const &current_square) -> std::set<Move> {
                 !piece || piece->colour != this->colour)
                 moves.emplace(current_square, square);
         }
+
+        if (rank >= 2) {
+            if (file >= 1) {
+                Square const &square = k_board[rank - 2][file - 1];
+
+                if (Piece const *piece = k_pieces[square];
+                    !piece || piece->colour != this->colour)
+                    moves.emplace(current_square, square);
+            }
+
+            if (file < 7) {
+                Square const &square = k_board[rank - 2][file + 1];
+
+                if (Piece const *piece = k_pieces[square];
+                    !piece || piece->colour != this->colour)
+                    moves.emplace(current_square, square);
+            }
+        }
     }
 
-    if (rank < 6) {
-        if (file >= 1) {
-            Square const &square = k_board[rank + 2][file - 1];
-
-            if (Piece const *piece = k_pieces[square];
-                !piece || piece->colour != this->colour)
-                moves.emplace(current_square, square);
-        }
-
+    if (rank < 7) {
         if (file >= 2) {
             Square const &square = k_board[rank + 1][file - 2];
-
-            if (Piece const *piece = k_pieces[square];
-                !piece || piece->colour != this->colour)
-                moves.emplace(current_square, square);
-        }
-
-        if (file < 7) {
-            Square const &square = k_board[rank + 2][file + 1];
 
             if (Piece const *piece = k_pieces[square];
                 !piece || piece->colour != this->colour)
@@ -130,6 +116,24 @@ auto Knight::get_moves(Square const &current_square) -> std::set<Move> {
             if (Piece const *piece = k_pieces[square];
                 !piece || piece->colour != this->colour)
                 moves.emplace(current_square, square);
+        }
+
+        if (rank < 6) {
+            if (file >= 1) {
+                Square const &square = k_board[rank + 2][file - 1];
+
+                if (Piece const *piece = k_pieces[square];
+                    !piece || piece->colour != this->colour)
+                    moves.emplace(current_square, square);
+            }
+
+            if (file < 7) {
+                Square const &square = k_board[rank + 2][file + 1];
+
+                if (Piece const *piece = k_pieces[square];
+                    !piece || piece->colour != this->colour)
+                    moves.emplace(current_square, square);
+            }
         }
     }
 
@@ -317,7 +321,7 @@ auto King::get_moves(Square const &current_square) -> std::set<Move> {
         if (0 > rank || rank >= 8 || 0 > file || file >= 8)
             continue;
 
-        if (std::int16_t const rank_diff = opposite_king_rank - rank,
+        if (std::int32_t const rank_diff = opposite_king_rank - rank,
             file_diff = opposite_king_file - file;
             rank_diff > -2 && rank_diff < 2 && file_diff > -2 && file_diff < 2)
             continue;
@@ -373,21 +377,9 @@ auto King::is_checked() const -> bool {
             piece->colour != this->colour)
             return true;
 
-    if (rank >= 2) {
-        if (file >= 1)
-            if (Piece const *piece = k_pieces[k_board[rank - 2][file - 1]];
-                piece && typeid(*piece) == typeid(Knight) &&
-                piece->colour != this->colour)
-                return true;
-
+    if (rank >= 1) {
         if (file >= 2)
             if (Piece const *piece = k_pieces[k_board[rank - 1][file - 2]];
-                piece && typeid(*piece) == typeid(Knight) &&
-                piece->colour != this->colour)
-                return true;
-
-        if (file < 7)
-            if (Piece const *piece = k_pieces[k_board[rank - 2][file + 1]];
                 piece && typeid(*piece) == typeid(Knight) &&
                 piece->colour != this->colour)
                 return true;
@@ -397,23 +389,25 @@ auto King::is_checked() const -> bool {
                 piece && typeid(*piece) == typeid(Knight) &&
                 piece->colour != this->colour)
                 return true;
+
+        if (rank >= 2) {
+            if (file >= 1)
+                if (Piece const *piece = k_pieces[k_board[rank - 2][file - 1]];
+                    piece && typeid(*piece) == typeid(Knight) &&
+                    piece->colour != this->colour)
+                    return true;
+
+            if (file < 7)
+                if (Piece const *piece = k_pieces[k_board[rank - 2][file + 1]];
+                    piece && typeid(*piece) == typeid(Knight) &&
+                    piece->colour != this->colour)
+                    return true;
+        }
     }
 
-    if (rank < 6) {
-        if (file >= 1)
-            if (Piece const *piece = k_pieces[k_board[rank + 2][file - 1]];
-                piece && typeid(*piece) == typeid(Knight) &&
-                piece->colour != this->colour)
-                return true;
-
+    if (rank < 7) {
         if (file >= 2)
             if (Piece const *piece = k_pieces[k_board[rank + 1][file - 2]];
-                piece && typeid(*piece) == typeid(Knight) &&
-                piece->colour != this->colour)
-                return true;
-
-        if (file < 7)
-            if (Piece const *piece = k_pieces[k_board[rank + 2][file + 1]];
                 piece && typeid(*piece) == typeid(Knight) &&
                 piece->colour != this->colour)
                 return true;
@@ -423,6 +417,20 @@ auto King::is_checked() const -> bool {
                 piece && typeid(*piece) == typeid(Knight) &&
                 piece->colour != this->colour)
                 return true;
+
+        if (rank < 6) {
+            if (file >= 1)
+                if (Piece const *piece = k_pieces[k_board[rank + 2][file - 1]];
+                    piece && typeid(*piece) == typeid(Knight) &&
+                    piece->colour != this->colour)
+                    return true;
+
+            if (file < 7)
+                if (Piece const *piece = k_pieces[k_board[rank + 2][file + 1]];
+                    piece && typeid(*piece) == typeid(Knight) &&
+                    piece->colour != this->colour)
+                    return true;
+        }
     }
 
     File left_file = file - 1, right_file = file + 1;

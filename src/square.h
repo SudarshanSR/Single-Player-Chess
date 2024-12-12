@@ -4,8 +4,8 @@
 #include <compare>
 #include <cstdint>
 
-using Rank = std::int16_t;
-using File = std::int16_t;
+using Rank = std::int32_t;
+using File = std::int32_t;
 
 struct Square final {
     Rank rank;
